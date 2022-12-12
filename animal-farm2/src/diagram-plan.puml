@@ -1,0 +1,67 @@
+@startuml
+class AnimalFarm {
+- animals: Set<Animal>
++ interactWithAnimals(): void
++ findGooseWithHighestEggCount(): Goose
+}
+abstract class Animal {
+- weight: int
+- id: UUID
+- noise: String
++ makeNoise(): String
+}
+abstract class Mammal extends Animal {
+- {static} MIN_BABY_WEIGHT: int
+- {static} MAX_BABY_WEIGHT: int
++ giveBirth(): Mammal
+- generateRandomBabyWeight(): int
+}
+class Cat extends Mammal {
+- {static} NOISE: String
+}
+class Dog extends Mammal {
+- {static} NOISE: String
+- {static} DUGGED_UP_HOLES_LIMIT: 10
+- duggedUpHoles: int
+- type: DogType
++ dugHole(): void
+- isAllowedToDugHole(): boolean
+}
+class Goose extends Animal {
+- {static} NOISE: String
+- eggCounter: int
++ layEgg(): void
+}
+class Cow extends Mammal {
+- {static} NOISE: String
+}
+enum DogType {
+SHEPHERD,
+RETRIEVER,
+HUSKY,
+OTHER;
+}
+AnimalFarm *-- Animal
+Dog -- DogType
+
+@enduml
+
+An animal farm owner asked you to model his farm.
+
+On the animal farm, we have cats, dogs, cows and geese.
+All animals have a weight, an id, and when interacted with, they make a noise.
+Cat says “Meow”, dog says “Woof”, goose says “Honk”, cow says “Moo”.
+The weight is in grams.
+
+Geese lay eggs and we want to keep count of them.
+Dogs like to dig holes, but we don’t like that,
+so after a dog has dug 10 times, that dog is not allowed to dig more.
+
+Dogs at the farm can be of type shepherd, retriever, husky or other.
+
+Cats, Dogs and Cow are mammals. When they give birth,
+their weight is reduced by the weight of the baby.
+
+The farm owner wants to be able to go through every animal
+and interact with them to hear their noises.
+The owner also wants to find the “Golden Goose”, aka the Goose that laid the most eggs.
